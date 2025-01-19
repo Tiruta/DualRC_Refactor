@@ -126,5 +126,5 @@ void rc1Close(void);
 struct rxConfig_s;
 struct rxRuntimeConfig_s;
 bool crsfRxInit(const struct rxConfig_s *initialRxConfig, struct rxRuntimeConfig_s *rxRuntimeConfig);
-bool crsfRxInit2(const struct rxConfig_s *initialRxConfig, struct rxRuntimeConfig_s *rxRuntimeConfig);
+bool crsfRxInit2(const struct rxConfig_s *initialRxConfig, struct rxRuntimeConfig_s *rxRuntimeConfig); //added by Tirta
 bool crsfRxIsActive(void);

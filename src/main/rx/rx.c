@@ -103,17 +103,18 @@ static uint16_t roleSwitch = 6;
 static uint8_t rcSampleIndex = 0;
 static int rcOverrideFlag = 0;
 
-int16_t rcDeliver[MAX_SUPPORTED_RC_CHANNEL_COUNT];
-int16_t rcUART2[MAX_SUPPORTED_RC_CHANNEL_COUNT];
-int16_t rcUART7[MAX_SUPPORTED_RC_CHANNEL_COUNT];
 
-int16_t rcUART2_lastTime = 0;
-int16_t rcUART7_lastTime = 0;
-int16_t rcUART2_interval = 0;
-int16_t rcUART7_interval = 0;
+int16_t rcDeliver[MAX_SUPPORTED_RC_CHANNEL_COUNT]; //added by Tirta
+int16_t rcUART2[MAX_SUPPORTED_RC_CHANNEL_COUNT]; //added by Tirta
+int16_t rcUART7[MAX_SUPPORTED_RC_CHANNEL_COUNT]; //added by Tirta
 
-bool is_UART2_Valid = true;
-bool is_UART7_Valid = true;
+int16_t rcUART2_lastTime = 0; //added by Tirta
+int16_t rcUART7_lastTime = 0; //added by Tirta
+int16_t rcUART2_interval = 0; //added by Tirta
+int16_t rcUART7_interval = 0; //added by Tirta
+
+bool is_UART2_Valid = true; //added by Tirta
+bool is_UART7_Valid = true; //added by Tirta
 
 PG_REGISTER_WITH_RESET_TEMPLATE(rxConfig_t, rxConfig, PG_RX_CONFIG, 12);
 
@@ -356,7 +357,7 @@ void rxInit(void)
 
     //crsf2OverrideInit();
     //mspOverrideInit();
-    crsfRxInit2(rxConfig(), &rxRuntimeConfig2);
+    crsfRxInit2(rxConfig(), &rxRuntimeConfig2); //added by Tirta
 
     for (int channel = 0; channel < rxChannelCount; channel++) {
         rcDeliver[channel] = 1500;
@@ -497,6 +498,7 @@ bool calculateRxChannelsAndUpdateFailsafe(timeUs_t currentTimeUs)
         return true;
     }
 
+    //added by Tirta
     rxFlightChannelsValid = true;
     is_UART7_Valid = true;
     is_UART2_Valid = true;
@@ -530,9 +532,10 @@ bool calculateRxChannelsAndUpdateFailsafe(timeUs_t currentTimeUs)
         */
 
         // Save channel value
-        rcStaging[channel] = sample;
+        rcStaging[channel] = sample; //added by Tirta
     }
 
+    //added by Tirta
     //check if rc is from UART2 or UART7
     //if ch6 < 1800 then this is UART2, Transmitter on UART2 should always be set to have this value on the respective channels
     //UART7's ch7 should always be 2000, DO NOT BIND TO ANY SWITCHES/POTS
@@ -558,6 +561,7 @@ bool calculateRxChannelsAndUpdateFailsafe(timeUs_t currentTimeUs)
         }
     }
     
+    //added by Tirta
     if(is_UART2_Valid && is_UART7_Valid && rxFlightChannelsValid){
         //if both RX are valid then switCh role normally
         if (rcOverrideFlag < 1300){
@@ -578,12 +582,12 @@ bool calculateRxChannelsAndUpdateFailsafe(timeUs_t currentTimeUs)
     
     } else {
         for (int channel = 0; channel < rxChannelCount; channel++) {
-            rcDeliver[channel] = rcUART2[channel];
+            rcDeliver[channel] = rcUART2[channel]; //added by Tirta
         }
     }
 
 
-    rcDeliver[6] = rcOverrideFlag;
+    rcDeliver[6] = rcOverrideFlag; //added by Tirta
 
 
 

@@ -53,20 +53,20 @@
 //added by Tirta
 
 STATIC_UNIT_TESTED bool crsfFrameDone = false;
-STATIC_UNIT_TESTED bool crsfFrameDone2 = false;
+STATIC_UNIT_TESTED bool crsfFrameDone2 = false; //added by Tirta
 STATIC_UNIT_TESTED crsfFrame_t crsfFrame;
-STATIC_UNIT_TESTED crsfFrame_t crsfFrame2;
+STATIC_UNIT_TESTED crsfFrame_t crsfFrame2; //added by Tirta
 
 STATIC_UNIT_TESTED uint32_t crsfChannelData[CRSF_MAX_CHANNEL];
-STATIC_UNIT_TESTED uint32_t crsfChannelData2[CRSF_MAX_CHANNEL];
+STATIC_UNIT_TESTED uint32_t crsfChannelData2[CRSF_MAX_CHANNEL]; //added by Tirta
 
 static serialPort_t *serialPort;
-static serialPort_t *serialPort2;
+static serialPort_t *serialPort2; //added by Tirta
 static timeUs_t crsfFrameStartAt = 0;
 static uint8_t telemetryBuf[CRSF_FRAME_SIZE_MAX];
 static uint8_t telemetryBufLen = 0;
 
-static rxRuntimeConfig_t rxRuntimeConfigCRSF2;
+static rxRuntimeConfig_t rxRuntimeConfigCRSF2; //added by Tirta
 
 const uint16_t crsfTxPowerStatesmW[CRSF_POWER_COUNT] = {0, 10, 25, 100, 500, 1000, 2000, 250, 50};
 
@@ -119,6 +119,7 @@ struct crsfPayloadRcChannelsPacked_s {
 
 typedef struct crsfPayloadRcChannelsPacked_s crsfPayloadRcChannelsPacked_t;
 
+//added by Tirta
 struct crsfPayloadRcChannelsPacked2_s {
     // 176 bits of data (11 bits per channel * 16 channels) = 22 bytes.
     unsigned int chan0b : 11;
@@ -237,7 +238,7 @@ STATIC_UNIT_TESTED void crsfDataReceive(uint16_t c, void *rxCallbackData)
 STATIC_UNIT_TESTED uint8_t crsfFrameStatus2(rxRuntimeConfig_t *rxRuntimeConfig)
 {
     UNUSED(rxRuntimeConfig);
-
+    //added by Tirta
     if (crsfFrameDone2) {
         crsfFrameDone2 = false;
         if (crsfFrame2.frame.type == CRSF_FRAMETYPE_RC_CHANNELS_PACKED) {
@@ -397,6 +398,7 @@ STATIC_UNIT_TESTED uint16_t crsfReadRawRC(const rxRuntimeConfig_t *rxRuntimeConf
     return (crsfChannelData[chan] * 1024 / 1639) + 881;
 }
 
+//added by Tirta
 STATIC_UNIT_TESTED uint16_t crsfReadRawRC2(const rxRuntimeConfig_t *rxRuntimeConfig2, uint8_t chan)
 {
     UNUSED(rxRuntimeConfig2);
@@ -465,6 +467,7 @@ bool crsfRxInit(const rxConfig_t *rxConfig, rxRuntimeConfig_t *rxRuntimeConfig)
     return serialPort != NULL;
 }
 
+//added by Tirta
 bool crsfRxInit2(const rxConfig_t *rxConfig, rxRuntimeConfig_t *rxRuntimeConfig2)
 {
     for (int ii = 0; ii < CRSF_MAX_CHANNEL; ++ii) {
@@ -494,6 +497,7 @@ bool crsfRxInit2(const rxConfig_t *rxConfig, rxRuntimeConfig_t *rxRuntimeConfig2
     
 }
 
+//added by Tirta
 void rc1Close(void){
 rxRuntimeConfig.rcReadRawFn = nullReadRawRC;
 rxRuntimeConfig.rcFrameStatusFn = nullFrameStatus;
@@ -507,6 +511,7 @@ rxRuntimeConfig.rcFrameStatusFn = nullFrameStatus;
         CRSF_PORT_OPTIONS);
 }
 
+//added by Tirta
 void rc2Close(void){
     serialPort2 = openSerialPort(6,
         FUNCTION_NONE,
@@ -517,6 +522,7 @@ void rc2Close(void){
         CRSF_PORT_OPTIONS);
 }
 
+//added by Tirta
 void crsf2OverrideInit(void)
 {
     crsfRxInit2(rxConfig(), &rxRuntimeConfigCRSF2);

@@ -204,8 +204,8 @@ typedef uint8_t (*rcFrameStatusFnPtr)(rxRuntimeConfig_t *rxRuntimeConfig);
 typedef bool (*rcProcessFrameFnPtr)(const rxRuntimeConfig_t *rxRuntimeConfig);
 typedef uint16_t (*rcGetLinkQualityPtr)(const rxRuntimeConfig_t *rxRuntimeConfig);
 
-extern rxRuntimeConfig_t rxRuntimeConfig;
-extern rxRuntimeConfig_t rxRuntimeConfig2; //!!TODO remove this extern, only needed once for channelCount
+extern rxRuntimeConfig_t rxRuntimeConfig; //!!TODO remove this extern, only needed once for channelCount
+extern rxRuntimeConfig_t rxRuntimeConfig2; //added by Tirta
 extern rxLinkStatistics_t rxLinkStatistics;
 void lqTrackerReset(rxLinkQualityTracker_e * lqTracker);
 void lqTrackerAccumulate(rxLinkQualityTracker_e * lqTracker, uint16_t rawValue);
